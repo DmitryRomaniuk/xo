@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/DmitryRomaniuk/xo#readme",
   "dependencies": {
-    "less": "2.7.1"
+    "less": "2.7.1",
+    "vue": "^2.0.3"
+  },
+  "devDependencies": {
+    "node-static": "^0.7.9"
   }
 }
