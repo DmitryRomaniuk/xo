@@ -1,22 +1,40 @@
-<script src="js/vue.min.js" type="text/javascript"></script>
-<div id="example-2">
-  <simple-counter></simple-counter>
-  <simple-counter></simple-counter>
-  <simple-counter></simple-counter>
-</div>
+<!--<script src="js/vue.min.js" type="text/javascript"></script>-->
+
+<body>
+    
+    <ul>
+        <li v-for="message in messages">{{ message }}</li>
+    </ul>
+    <message @message-saved="handleMessage"></message>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+</body>
 <script>
-var data = { counter: 0 }
-Vue.component('simple-counter', {
-  template: '<button v-on:click="counter += 1">{{ counter }}</button>',
-  // data is technically a function, so Vue won't
-  // complain, but we return the same object
-  // reference for each component instance
-  data: function () {
-    console.log(data);
-    return data
-  }
+Vue.component('message', {
+    template: '<input v-model="message" @keyup.enter="saveMessage">',
+    data: function() {
+        return {
+            message: ''
+        }
+    },
+    methods: {
+        saveMessage: function() {
+            this.$emit('message-saved', this.message)
+
+            this.message = ''
+        }
+    }
 })
+
 new Vue({
-  el: '#example-2'
+    el: 'body',
+    data: {
+        messages: []
+    },
+    methods: {
+        handleMessage: function(message) {
+            this.messages.push(message)
+        }
+    }
 })
 </script>
