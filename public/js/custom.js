@@ -13,7 +13,7 @@ Vue.component('my-game', {
             `,
             methods: {
                 newClick: function () {
-                    console.log('click')
+                    //console.log('click')
                     this.$emit('asdf','asdfsa')
                 }
             }
@@ -40,8 +40,9 @@ Vue.component('my-row', {
 Vue.component('my-col', {
   template: `<div class="cell" v-on:click="cx2(event)">
                     <div class="inner-fillet">
-                        <i class="fa fa-check" aria-hidden="true"
-                        v-bind:class="[isChecked ? 'busy' : 'free']"></i>
+                        <i class="fa" aria-hidden="true"
+                        v-bind:class="[isChecked ? 'busy' : 'free',playerOne? 'fa-check':'',
+                        playerTwo? 'fa-circle-o':'']"></i>
                     </div>
             </div>
             `,
@@ -51,12 +52,13 @@ Vue.component('my-col', {
         //console.log('COL'+this.col)
         var posX=this.col;
         var posY=this.row;
-        var isChecked = arr[posX][posY];
-        return {arr: arr, isChecked:isChecked, posX:posX, posY:posY}
+        var playerOne = true;
+        var playerTwo = false;
+        var isChecked ;
+        return {arr, isChecked, posX, posY, playerOne, playerTwo}
     },
     computed: {
     classObject: function () {
-        this.isChecked = arr[this.posX][this.posY];
         return {
         free: !this.isChecked,
         busy: this.isChecked
@@ -66,17 +68,19 @@ Vue.component('my-col', {
     methods: {
         cx2: function(event) {
             arr[this.posY][this.posX] = true;
+            this.isChecked = arr[this.posY][this.posX];
             //console.log(arr[0][0],arr[0][1],arr[0][2],arr[1][0],arr[1][1],arr[1][2],arr[2][0],arr[2][1],arr[2][2]);
-            console.log(this.posX+ ' '+this.posY+ ' '+this.isChecked)
-            this.posClick = {posX:this.posX,posY:this.posY};
+            console.log(this.posX+ ' '+this.posY+ ' '+this.isChecked+ ' '+arr[this.posY][this.posX])
+            //this.posClick = {posX:this.posX,posY:this.posY};
             //console.log('emit-data');
-            this.$emit('position-click', 'data')
+            //this.$emit('position-click', 'data')
             return arr
         }
     }
 })
 var arrX = new Array(3);
 var arr = [Object.create(arrX),Object.create(arrX),Object.create(arrX)];
+//var arr = [[false,false,false],[false,false,false],[false,false,false]]
 new Vue({
     el: '#gameClick',
     methods: {

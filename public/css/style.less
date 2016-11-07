@@ -33,20 +33,12 @@ section {
     margin: 0;
     padding: 0;
 
-    &:hover i {
-        color: burlywood;
-        display: block;
-        font-size: 7*@minimalVH;
-        text-align: center;
-        line-height: 8*@minimalVH;
+    i {
+        display: none;
     }
 
     &:hover i.free {
-        opacity: 0.7;
-    }
-
-    &:hover i.busy {
-        opacity: 1;
+        opacity: 0.5;
         display: block;
     }
 }
@@ -62,22 +54,29 @@ section {
     box-shadow: inset 0 0 10px #000000;
 
     i {
-        display: none;
         color: burlywood;
         display: block;
         font-size: 7*@minimalVH;
         text-align: center;
         line-height: 8*@minimalVH;
-    }
 
-    i.busy {
+        &.fa-check {
+        color: burlywood;
+        }
+
+        &.fa-circle-o {
+        color: palevioletred;
+        }
+
+        &.busy {
         opacity: 1;
         display: block;
-    }
+        }
 
-    i.free {
+        &.free {
         opacity: 0.7;
         display: none;
+        }
     }
 
 }
