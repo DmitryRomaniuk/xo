@@ -1,6 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-        "editor.fontSize": 12,
+        "editor.fontSize": 14,
         "extensions.autoUpdate": true,
         "files.autoSave": "onWindowChange"
 }
