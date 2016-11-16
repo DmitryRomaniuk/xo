@@ -1,40 +1,66 @@
+<html>
+    <head></head>
 <!--<script src="js/vue.min.js" type="text/javascript"></script>-->
 
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>-->
+
 <body>
-    
-    <ul>
-        <li v-for="message in messages">{{ message }}</li>
-    </ul>
-    <message @message-saved="handleMessage"></message>
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+    <div id='app'>
+    </div>
 </body>
+<script src="js/vue.js" type="text/javascript"></script>
 <script>
-Vue.component('message', {
-    template: '<input v-model="message" @keyup.enter="saveMessage">',
+Vue.component('insert-compotent', {
+    props: {
+        elem: {
+            type: Array
+        }
+    },
+    // mounted: function () {
+    //     this.$root.$on('array-update', function (item) {
+    //         console.log('array-update');
+    //         this.elem=item;
+    //     })
+    // },
+    methods: {
+        userClick: function () {
+            this.elem[0][0] = + this.elem[0][0] + 1;
+            this.$root.$emit('array-up', this.elem);
+            this.$nextTick(function () {
+                console.log('next tick') // => 'updated'
+                console.log(this.elem) // => 'updated'
+            })
+        }
+    },
+    template: `
+    <div>
+        <input v-model="elem[0][0]" placeholder="edit me">
+        <div v-for='first in elem[0]'><span>{{first}}</span></br></div>
+        <div v-for='second in elem[1]'><span>{{second}}</span></br></div>
+        <button @click='userClick' style='width: 200px; heigth: 200px'>submit</button>
+    </div>`
+})
+
+var vm = new Vue({
+    el: '#app',
     data: function() {
-        return {
-            message: ''
-        }
+        var arr = [[1,2],[3,4]]
+        return {arr: arr}
     },
-    methods: {
-        saveMessage: function() {
-            this.$emit('message-saved', this.message)
-
-            this.message = ''
-        }
-    }
+    mounted: function () {
+        this.$root.$on('array-up', function (item) {
+            console.log(item);
+            this.arr=item;
+            //this.$root.$emit('array-update', this.arr)
+        })
+    },
+    template: `
+        <div>
+            <insert-compotent :elem='arr'>
+            </insert-compotent>
+        </div>
+    `
 })
 
-new Vue({
-    el: 'body',
-    data: {
-        messages: []
-    },
-    methods: {
-        handleMessage: function(message) {
-            this.messages.push(message)
-        }
-    }
-})
 </script>
+</html>
